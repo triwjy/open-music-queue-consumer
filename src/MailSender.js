@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const nodemailer = require('nodemailer');
 
 class MailSender {
@@ -13,17 +14,20 @@ class MailSender {
     });
   }
 
-  sendEmail(targetEmail, content) {
+  sendEmail(targetEmail, playlistName, content) {
     const message = {
-      from: 'Open Music Apps',
+      from: `'Open Music Apps "${process.env.MAIL_ADDRESS}"'`,
       to: targetEmail,
-      subject: 'Playlist Export',
+      subject: `Playlist "${playlistName}" Export`,
       text: `Dear Open Music customer, 
-      Please find the requested playlist export in the attachment. 
+      Please find the requested playlist "${playlistName}" export in the attachment. 
+      Cheers!`,
+      html: `Dear Open Music customer, <br><br> 
+      Please find the requested playlist "${playlistName}" export in the attachment.<br>
       Cheers!`,
       attachments: [
         {
-          filename: 'playlist.json',
+          filename: `Playlist ${playlistName}.json`,
           content,
         },
       ],
